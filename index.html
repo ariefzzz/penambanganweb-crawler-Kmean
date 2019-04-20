@@ -84,8 +84,8 @@
 <p>jika gagal menginstall scrapy silahkan install terlebih dahulu yang diminta scrapy bisa saja .net framework ataupun visual studio 14 tergantung keadaan komputer masing masing </p>
 <h2 id="12-membuat-project-scrapy">1.2 membuat project scrapy</h2>
 <p>membuat project scrapy pertama buka folder tempat kita akan membuat project , disana tekan shift+klikKanan kemudian pilih  <strong>open command window here</strong> maka  akan muncul cmd dan ketik disana <code>scrapy startproject olx</code> seperti berikut</p>
-<p><img alt="1555651284646" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555651284646.png" /></p>
-<p>maka akan tergenerate project scrapy seperti berikut <img alt="1555651471600" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555651471600.png" /></p>
+<p><img alt="1555651284646" src="img\1555651284646.png" /></p>
+<p>maka akan tergenerate project scrapy seperti berikut <img alt="1555651471600" src="img\1555651471600.png" /></p>
 <p>setelah itu gunakan perintah <code>cd tugasAkhir</code> untuk berpindah directory ke tugasAkhir dan jalankan perintah berikut untuk membuat crawlernya <code>scrapy genspider tugasAkhir pta.trunojoyo.ac.id</code> </p>
 <h2 id="13-mengatur-domain">1.3 mengatur domain</h2>
 <p>domain digunakan untuk membatasi lingkup situs yang dijelajahi oleh crawler ,</p>
@@ -107,7 +107,7 @@
 </ul>
 <h2 id="16-mengatur-data-yang-akan-diambil">1.6 mengatur data yang akan diambil</h2>
 <p>setelah rule mengatur tombol mana yang mengarah ke pagging berikutnya maka link content tiap pagging harus di extract  , disini saya mengextraknya berdasarkan css <code>'a.gray.button::attr(href)'</code>  digambar berikut bisa dilihat css yang menuju halaman detail</p>
-<p><img alt="1555660038677" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555660038677.png" /></p>
+<p><img alt="1555660038677" src="img\1555660038677.png" /></p>
 <p>css tadi di extract di method parse_item kemudian tiap link yang didapat di parse ke method <code>parse_detail_page</code></p>
 <pre><code class="python">def parse_item(self, response):
         print('Processing..' + response.url)
@@ -160,19 +160,19 @@ class ItemTugasAkhir(scrapy.Item):
 <h2 id="17-crawl-data">1.7 crawl data</h2>
 <p>untuk crawling data bisa menggunakan perintah <code>scrapy crawl --nolog TugasAkhir -o data.csv -t csv</code>  data hasil crawling akan disimpan di data.csv</p>
 <p>proses crawling seperti berikut tunggu hingga selesai</p>
-<p><img alt="1555664423165" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555664423165.png" /></p>
+<p><img alt="1555664423165" src="img\1555664423165.png" /></p>
 <p>setelah selesai data akan menjadi seperti berikut :</p>
-<p><img alt="1555674935243" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555674935243.png" /></p>
+<p><img alt="1555674935243" src="img\1555674935243.png" /></p>
 <h2 id="2-migrasi-csv-ke-sqlite">2. migrasi csv ke sqlite</h2>
 <p>saya menggunakan tools <a href="https://sqlitebrowser.org/">db browser for sqlite</a> disini sangat mudah  klik new database ketika muncul  pop up untuk mengisi field apa saja yang ada di db close saja </p>
-<p><img alt="1555675137009" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555675137009.png" /></p>
+<p><img alt="1555675137009" src="img\1555675137009.png" /></p>
 <p>setelah itu di menu file pilih import table form csv lali pilih file csv tadi dan lakukan proses migrasi</p>
-<p><img alt="1555675466884" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555675466884.png" /></p>
+<p><img alt="1555675466884" src="img\1555675466884.png" /></p>
 <p>tunggu hingga proses selesai </p>
-<p><img alt="1555675509234" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555675509234.png" /></p>
+<p><img alt="1555675509234" src="img\1555675509234.png" /></p>
 <h2 id="3-clushtering-data">3. clushtering data</h2>
 <p>dalam step ini diasumsikan data telah menjadi sqlite dengan struktur seperti ini</p>
-<p><img alt="1555681519832" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555681519832.png" /></p>
+<p><img alt="1555681519832" src="img\1555681519832.png" /></p>
 <h2 id="31-koneksi-database">3.1 koneksi database</h2>
 <p>saya menggunakan library sqlite3 untuk melakukan koneksi dengan db , code untuk melakukan koneksi sebagai berikut</p>
 <pre><code class="python">import sqlite3 
@@ -287,7 +287,7 @@ def simpanDataTerstruktur(conn , text , url):
 </code></pre>
 
 <p>maka file database setelah dilakukan proses ini akan menjadi </p>
-<p><img alt="1555745362681" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555745362681.png" /></p>
+<p><img alt="1555745362681" src="img\1555745362681.png" /></p>
 <h2 id="33-vsm">3.3 vsm</h2>
 <p>setelah menjalankan method <code>def prosesDataTerstruktur(conn):</code> maka variable globa <code>daftarKata</code> akan berisi seluruh kata (yang telah menjadi data terstruktur) dari seluruh dokumen yang ada di database maka proses vsm adalah menghitung berapa banyak masing masing kata terkandung di dalam dokumen , metode untuk menghitung berapa jumlah kata di sebuah text sebagai berikut</p>
 <pre><code class="python">def keVsm(text):
@@ -379,7 +379,7 @@ def simpanDataTerstruktur(conn , text , url):
 </code></pre>
 
 <p>hasil kmean akan seperti berikut</p>
-<p><img alt="1555754273918" src="C:\Users\zainal\AppData\Roaming\Typora\typora-user-images\1555754273918.png" /></p>
+<p><img alt="1555754273918" src="img\1555754273918.png" /></p>
 <p>sekian penjelasan saya kurang lebihnya mohon maaf   , terimakasih</p>
 <p>full code ada di repo berikut  :</p></div>
         </div>
